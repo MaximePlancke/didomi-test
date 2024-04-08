@@ -1,7 +1,6 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Button} from "antd";
 import {ConsentPurpose} from "./ConsentPurpose";
-import {DidomiContext} from "./App";
 
 export const ConsentForm: React.FC = () => {
     const [loading, setLoading] = useState(false);
@@ -66,7 +65,7 @@ export const ConsentForm: React.FC = () => {
 
     return (
         <div>
-            <ConsentPurpose/>
+            <ConsentPurpose></ConsentPurpose>
             <Button
                 className="save-consents-button"
                 onClick={savePendingConsents}

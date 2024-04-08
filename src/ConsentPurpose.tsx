@@ -1,17 +1,22 @@
-import React, {useState, useRef, useContext} from "react";
+import React, {useState, useRef, useContext, useEffect} from "react";
 import {Card, Switch,} from "antd";
-import {DidomiContext} from "./App";
+import {DidomiContext} from "./ContentWidget";
 
 export const ConsentPurpose: React.FC = () => {
     const didomiObjects: any = useContext(DidomiContext);
     const container = didomiObjects.container;
     const entities = didomiObjects.entities;
     const purpose = entities?.purposes[0]
-    const id = purpose.id
+    const id = purpose?.id
 
-    const [purposeEnabled, setPurposeEnabled] = useState(
-        container.getPurposeEnabledById(id)
-    );
+    const [purposeEnabled, setPurposeEnabled] = useState();
+
+    useEffect(() => {
+        if (container) {
+            setPurposeEnabled(container.getPurposeEnabledById(id));
+        }
+    }, [container, entities, id]);
+
     const sectionRef = useRef(null);
 
     const sendPurposeConsent = (event:any) => {
@@ -31,6 +36,7 @@ export const ConsentPurpose: React.FC = () => {
 
     return (
         <div ref={sectionRef}>
+            {purpose && (
             <Card>
                 {/* IMPORTANT: Use 'didomi-entity-content' to display your entities translated content */}
 
@@ -62,6 +68,7 @@ export const ConsentPurpose: React.FC = () => {
                     onChange={sendPurposeConsent}
                 />
             </Card>
+            )}
         </div>
     );
 }
